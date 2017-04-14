@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dongmyo.example.mapper.MemberMapper">
+    <select id="getMember" resultType="member" parameterType="long">
+        SELECT
+          member_id   AS id,
+          user_code   AS code,
+          name        AS name,
+          email       AS email,
+          phone       AS phone
+        FROM Members
+        WHERE member_id = ${id}
+    </select>
+
+    <insert id="insertMember" parameterType="member">
+        INSERT INTO Members
+        (
+          user_code,
+          name,
+          email,
+          phone
+        )
+        VALUES
+        (
+          #{code},
+          #{name},
+          #{email},
+          #{phone}
+        )
+
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+</mapper>
